@@ -1,0 +1,15 @@
+C:\Users\micha\Desktop\projekty cv\casino\casino\bin\Debug\net6.0\casino.exe
+C:\Users\micha\Desktop\projekty cv\casino\casino\bin\Debug\net6.0\casino.deps.json
+C:\Users\micha\Desktop\projekty cv\casino\casino\bin\Debug\net6.0\casino.runtimeconfig.json
+C:\Users\micha\Desktop\projekty cv\casino\casino\bin\Debug\net6.0\casino.dll
+C:\Users\micha\Desktop\projekty cv\casino\casino\bin\Debug\net6.0\casino.pdb
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.csproj.AssemblyReference.cache
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.AssemblyInfoInputs.cache
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.AssemblyInfo.cs
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.csproj.CoreCompileInputs.cache
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.dll
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\refint\casino.dll
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.pdb
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\casino.genruntimeconfig.cache
+C:\Users\micha\Desktop\projekty cv\casino\casino\obj\Debug\net6.0\ref\casino.dll
