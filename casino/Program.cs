@@ -1,11 +1,16 @@
-﻿using System;
-using System.IO;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics.Arm;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text;
+
 namespace Casino
 {
     class Program
     {
-        
-        static void Main(string[] args)
+        private int Early_menu()
         {
             bool loop = true;
             while (loop)
@@ -16,45 +21,74 @@ namespace Casino
                 Console.WriteLine("Wybor: ");
                 if (int.TryParse(Console.ReadLine(), out int w))
                 {
-                    switch (w)
+                    switch(w)
                     {
                         case 1:
-                            loop = false;
-                            zaloguj_sie();
-                            break;
+                            return w;
+                            
                         case 2:
-                            Environment.Exit(0);
-                            break;
+                            return w;
                         default:
-                            Console.WriteLine("Wybierz 1 albo 2");
-                            Console.ReadKey();
+                            Console.WriteLine("Wybierz zgodnie z przedziałem");
                             break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Wybierz liczbę.");
-                    Console.ReadKey();
+                    Console.WriteLine("Prosze wpisac tylko liczbe.");
                 }
+                
             }
+            return 0;
         }
-        static void zaloguj_sie()
+        int zaloguj_sie()
         {
             string? login = null;
-            string? haslo = null;
-            while(true)
+            SecureString haslo = new SecureString();
+            bool loop = true;
+            while (loop)
             {
                 Console.Clear();
                 Console.WriteLine("Podaj login: ");
                 login = Console.ReadLine();
                 Console.WriteLine("Podaj haslo: ");
-                login = Console.ReadLine();
+                ConsoleKeyInfo key;
+                do
+                {
+                    key = Console.ReadKey(true);
+                    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                    {
+                        haslo.AppendChar(key.KeyChar);
+                        Console.Write("*");
+                    }
+                    else if (key.Key == ConsoleKey.Backspace && haslo.Length > 0)
+                    {
+                        haslo.RemoveAt(haslo.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                } while (key.Key != ConsoleKey.Enter);
+                using (SHA256 sha = SHA256.Create())
+                {
+                    IntPtr unmanagedString = IntPtr.Zero;
+                    unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(haslo);
+                    
+                    string? helper = Marshal.PtrToStringUni(unmanagedString);
+                    byte[] hashed = sha.ComputeHash(Encoding.UTF8.GetBytes(helper));
+                    
+                    string pass = BitConverter.ToString(hashed);
+                   Console.WriteLine(pass);
+                    Console.ReadKey();
+                    
+                }
                 try
                 {
                     string[] linie = File.ReadAllLines($"{login}.txt");
-                    if (login == linie[0] && haslo == linie[1])
+                    if (login == linie[0])
                     {
+                        loop = false;
+
                         //menu();
+                        return 1;
                     }
                     else
                     {
@@ -64,6 +98,50 @@ namespace Casino
                 }
                 catch (Exception e) { Console.WriteLine(e.ToString()); }
             }
+            return 0;
         }
+        int menu()
+        {
+            Console.Clear();
+            Console.WriteLine("1. Zagraj.");
+            Console.WriteLine("2. Wyloguj.");
+            if (int.TryParse(Console.ReadLine(), out int w))
+            {
+                switch (w)
+                {
+                    case 1:
+                        //zagraj
+                        return 1;
+                    case 2:
+                        return 2;
+                    default:
+                        Console.WriteLine("Wybierz zgodnie z zakresem");
+                        break;
+                }
+            }
+            else
+                Console.WriteLine("Dozwolone są tylko liczby");
+            return 0;
+        }
+        static void Main(string[] args)
+        {
+            Program program = new Program();
+            if (program.Early_menu() == 1)
+            {
+                if (program.zaloguj_sie() == 1)
+                {
+                    program.menu();
+                    Console.ReadKey();
+                }
+            }
+            else if (program.Early_menu() == 2)
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+
+            }
+        }        
     }
 }
