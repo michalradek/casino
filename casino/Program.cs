@@ -67,33 +67,29 @@ namespace Casino
                         Console.Write("\b \b");
                     }
                 } while (key.Key != ConsoleKey.Enter);
-                using (SHA256 sha = SHA256.Create())
-                {
-                    IntPtr unmanagedString = IntPtr.Zero;
-                    unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(haslo);
-                    
-                    string? helper = Marshal.PtrToStringUni(unmanagedString);
-                    byte[] hashed = sha.ComputeHash(Encoding.UTF8.GetBytes(helper));
-                    
-                    string pass = BitConverter.ToString(hashed);
-                   Console.WriteLine(pass);
-                    Console.ReadKey();
-                    
-                }
                 try
                 {
-                    string[] linie = File.ReadAllLines($"{login}.txt");
-                    if (login == linie[0])
+                    using (SHA256 sha = SHA256.Create())
                     {
-                        loop = false;
-
-                        //menu();
-                        return 1;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Niepoprawny login lub haslo.");
+                        IntPtr unmanagedString = IntPtr.Zero;
+                        unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(haslo);
+                        string? helper = Marshal.PtrToStringUni(unmanagedString);
+                        byte[] hashed = sha.ComputeHash(Encoding.UTF8.GetBytes(helper));
+                        string pass = BitConverter.ToString(hashed).Replace("-", "").ToLower();
+                        Console.WriteLine(pass);
                         Console.ReadKey();
+                        string[] linie = File.ReadAllLines($"{login}.txt");
+                        if (login == linie[0] && pass == linie[1])
+                        {
+                            loop = false;
+                            //menu();
+                            return 1;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Niepoprawny login lub haslo.");
+                            Console.ReadKey();
+                        }
                     }
                 }
                 catch (Exception e) { Console.WriteLine(e.ToString()); }
@@ -130,8 +126,15 @@ namespace Casino
             {
                 if (program.zaloguj_sie() == 1)
                 {
-                    program.menu();
-                    Console.ReadKey();
+                    if (program.menu() == 1)
+                    {
+                        Console.WriteLine("chuj");
+                        Console.ReadKey();
+                    }
+                    else if(program.menu() == 2)
+                    {
+                        program.zaloguj_sie();
+                    }
                 }
             }
             else if (program.Early_menu() == 2)
