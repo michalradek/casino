@@ -8,9 +8,11 @@ using System.Text;
 
 namespace Casino
 {
-    class Program
+    public class Casino
     {
-        private int Early_menu()
+        protected string? login = "";
+        protected SecureString haslo = new SecureString();
+        public void Early_menu()
         {
             bool loop = true;
             while (loop)
@@ -21,15 +23,14 @@ namespace Casino
                 Console.WriteLine("Wybor: ");
                 if (int.TryParse(Console.ReadLine(), out int w))
                 {
-                    switch(w)
+                    switch (w)
                     {
                         case 1:
-                            return w;
-                            
+                            zaloguj_sie();
+                            break;
+
                         case 2:
-                            return w;
-                        default:
-                            Console.WriteLine("Wybierz zgodnie z przedziałem");
+                            Environment.Exit(0);
                             break;
                     }
                 }
@@ -37,14 +38,11 @@ namespace Casino
                 {
                     Console.WriteLine("Prosze wpisac tylko liczbe.");
                 }
-                
+
             }
-            return 0;
         }
-        int zaloguj_sie()
+        private void zaloguj_sie()
         {
-            string? login = null;
-            SecureString haslo = new SecureString();
             bool loop = true;
             while (loop)
             {
@@ -76,14 +74,11 @@ namespace Casino
                         string? helper = Marshal.PtrToStringUni(unmanagedString);
                         byte[] hashed = sha.ComputeHash(Encoding.UTF8.GetBytes(helper));
                         string pass = BitConverter.ToString(hashed).Replace("-", "").ToLower();
-                        Console.WriteLine(pass);
-                        Console.ReadKey();
                         string[] linie = File.ReadAllLines($"{login}.txt");
                         if (login == linie[0] && pass == linie[1])
                         {
                             loop = false;
-                            //menu();
-                            return 1;
+                            menu();
                         }
                         else
                         {
@@ -94,57 +89,41 @@ namespace Casino
                 }
                 catch (Exception e) { Console.WriteLine(e.ToString()); }
             }
-            return 0;
         }
-        int menu()
+        private void menu()
         {
-            Console.Clear();
-            Console.WriteLine("1. Zagraj.");
-            Console.WriteLine("2. Wyloguj.");
-            if (int.TryParse(Console.ReadLine(), out int w))
+            bool loop = true;
+            while(loop)
             {
-                switch (w)
+                Console.Clear();
+                Console.WriteLine("1. Zagraj.");
+                Console.WriteLine("2. Wyloguj.");
+                if (int.TryParse(Console.ReadLine(), out int w))
                 {
-                    case 1:
-                        //zagraj
-                        return 1;
-                    case 2:
-                        return 2;
-                    default:
-                        Console.WriteLine("Wybierz zgodnie z zakresem");
-                        break;
-                }
-            }
-            else
-                Console.WriteLine("Dozwolone są tylko liczby");
-            return 0;
-        }
-        static void Main(string[] args)
-        {
-            Program program = new Program();
-            if (program.Early_menu() == 1)
-            {
-                if (program.zaloguj_sie() == 1)
-                {
-                    if (program.menu() == 1)
+                    switch (w)
                     {
-                        Console.WriteLine("chuj");
-                        Console.ReadKey();
-                    }
-                    else if(program.menu() == 2)
-                    {
-                        program.zaloguj_sie();
+                        case 1:
+                            Console.WriteLine("play");
+                            break;
+                        case 2:
+                            Console.WriteLine("logout");
+                            break;
                     }
                 }
+                else
+                {
+                    Console.WriteLine("Dozwolone są tylko liczby");
+                    Console.ReadKey();
+                }         
             }
-            else if (program.Early_menu() == 2)
-            {
-                Environment.Exit(0);
-            }
-            else
-            {
-
-            }
-        }        
+        }
+    }
+    class Program
+    { 
+        public static void Main(string[] args)
+        {
+            Casino casino = new Casino();
+            casino.Early_menu();
+        }
     }
 }

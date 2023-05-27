@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\micha\\Desktop\\casino\\casino\\casino.csproj",
+      "projectUniqueName": "C:\\Users\\micha\\Documents\\programy\\casino\\casino\\casino.csproj",
       "projectName": "casino",
-      "projectPath": "C:\\Users\\micha\\Desktop\\casino\\casino\\casino.csproj",
+      "projectPath": "C:\\Users\\micha\\Documents\\programy\\casino\\casino\\casino.csproj",
       "packagesPath": "C:\\Users\\micha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\micha\\Desktop\\casino\\casino\\obj\\",
+      "outputPath": "C:\\Users\\micha\\Documents\\programy\\casino\\casino\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\micha\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
